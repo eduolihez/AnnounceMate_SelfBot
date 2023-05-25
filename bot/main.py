@@ -14,11 +14,10 @@ servidores_ids = []  # IDs de los servidores
 canales_ids_anuncio = [1088487226628919326, 1088487283717586994, 1088487807326105721,
                        1077521551815102514, 1077521918443388998, 1077521987536162876, 949421796917133372,
                        1090227243017572373, 1090227291981889606, 1090227324756168756,
-                       682102282548150373, 661681250783985694, 661681300360396810,
-                       1109876895182491700, 1109877039567224892, 1109877110371270737]
+                       682102282548150373, 661681250783985694, 661681300360396810]
 
 # Configura el intervalo de tiempo entre cada anuncio (en segundos)
-intervalo_anuncio = 600  # 1 hora = 3600 segundos
+intervalo_anuncio = 1800  # 1 hora = 3600 segundos
 
 # Configura las rutas de las imágenes que deseas adjuntar en los anuncios
 rutas_imagenes = ['150.jpg', '350.jpg',
