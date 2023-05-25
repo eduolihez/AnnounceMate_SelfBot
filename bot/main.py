@@ -18,7 +18,7 @@ canales_ids_anuncio = [1088487226628919326, 1088487283717586994, 108848780732610
                        1107023909599051796, 1107023980071763968, 1107023998426038423, 1107024015652036680]
 
 # Configura el intervalo de tiempo entre cada anuncio (en segundos)
-intervalo_anuncio = 1800  # 1 hora = 3600 segundos
+intervalo_anuncio = 3600  # 1 hora = 3600 segundos
 
 # Configura las rutas de las imágenes que deseas adjuntar en los anuncios
 rutas_imagenes = ['150.jpg', '350.jpg',
@@ -27,7 +27,7 @@ rutas_imagenes = ['150.jpg', '350.jpg',
 # Configura el intervalo de tiempo entre cada mensaje directo (en segundos)
 intervalo_dm = 5400  # 1.5 horas = 5400 segundos
 
-bot = commands.Bot(command_prefix='$')
+bot = commands.Bot(command_prefix='!')
 
 
 @bot.event
@@ -37,7 +37,7 @@ async def on_ready():
 
 
 @bot.command()
-async def ayuda(ctx):
+async def h(ctx):
     embed = discord.Embed(
         title="Bot de Ayuda", description="¡Hola! Soy el bot de ayuda.", color=discord.Color.blue())
     embed.add_field(name="Instrucciones:",
