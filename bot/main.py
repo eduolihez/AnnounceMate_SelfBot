@@ -19,9 +19,6 @@ intervalo_anuncio = 3600  # 1 hora = 3600 segundos
 rutas_imagenes = ['150.jpg', '350.jpg', '500.jpg', '750.jpg'
                   '900.jpg']  # Rutas de las imágenes
 
-# Configura el intervalo de tiempo entre cada mensaje directo (en segundos)
-intervalo_dm = 5400  # 1.5 horas = 5400 segundos
-
 bot = commands.Bot(command_prefix='$')
 
 
@@ -32,7 +29,7 @@ async def on_ready():
 
 
 @bot.command()
-async def h(ctx):
+async def ayuda(ctx):
     embed = discord.Embed(
         title="Bot de Ayuda", description="¡Hola! Soy el bot de ayuda.", color=discord.Color.blue())
     embed.add_field(name="Instrucciones:",
