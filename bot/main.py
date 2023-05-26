@@ -6,26 +6,18 @@ import random
 # Configura tu token de bot de Discord
 TOKEN = 'MTA4NzA3MDk5NDU2MjI5ODAwNg.GAV8SV.ydnomqsVQa-pICYTaJEHsQq15dlth3zKF28dzs'
 
-# Configura la lista de IDs de servidores donde se seleccionarán los usuarios aleatorios
-servidores_ids = []  # IDs de los servidores
-
 # Configura la lista de IDs de canales de anuncios
 # IDs de los canales para los anuncios
-canales_ids_anuncio = [1088487226628919326, 1088487283717586994, 1088487807326105721,
-                       1077521551815102514, 1077521918443388998, 1077521987536162876, 949421796917133372,
+canales_ids_anuncio = [1088487226628919326, 1088487283717586994,
                        1090227243017572373, 1090227291981889606, 1090227324756168756,
-                       682102282548150373, 661681250783985694, 661681300360396810,
-                       1107023909599051796, 1107023980071763968, 1107023998426038423, 1107024015652036680]
+                       1107023909599051796, 1107023998426038423, 1107023980071763968, 1107024015652036680]
 
 # Configura el intervalo de tiempo entre cada anuncio (en segundos)
-intervalo_anuncio = 1800  # 1 hora = 3600 segundos
+intervalo_anuncio = 3600  # 1 hora = 3600 segundos
 
 # Configura las rutas de las imágenes que deseas adjuntar en los anuncios
-rutas_imagenes = ['150.jpg', '350.jpg',
+rutas_imagenes = ['150.jpg', '350.jpg', '500.jpg', '750.jpg'
                   '900.jpg']  # Rutas de las imágenes
-
-# Configura el intervalo de tiempo entre cada mensaje directo (en segundos)
-intervalo_dm = 5400  # 1.5 horas = 5400 segundos
 
 bot = commands.Bot(command_prefix='$')
 
@@ -60,22 +52,40 @@ async def enviar_anuncio():
                 imagenes_adjuntas.append(discord.File(imagen))
 
         await canal_anuncio.send('''
-**𝐏𝐚𝐲𝐏𝐚𝐥 𝐀𝐜𝐜𝐨𝐮𝐧𝐭𝐬**
-```yaml
-🔒 150€ Balance ➢ 10€
-```
-```yaml
-🔒 350€ Balance ➢ 20€
-```
-```yaml
-🔒 900€ Balance ➢ 50€
-```
-:shopping_cart: **Payment Method:** Cryptocurrencies (*ETH, BTC, SOL, etc...*) only.
+**:lock: Premium Account Access! Get Instant Balances! :lock:**
 
-> **__Purchase here:__ <@1087070994562298006>  (DM)**
-> **FAQ: If you have questions drop a message.**
-> **Vouches: You can ask for reviews at my DM, also have proofs & can __screenshare__.**
-        ''', files=imagenes_adjuntas)
+:moneybag: **Balance Options:**
+- **150€ Balance** :arrow_right: **Only 10€!**
+- **350€ Balance** :arrow_right: **Just 20€!**
+- **500€ Balance** :arrow_right: **Special Offer at 30€!**
+- **750€ Balance** :arrow_right: **Limited Time Deal at 40€!**
+- **900€ Balance** :arrow_right: **Amazing Deal at 50€!**
+- **1200€ Balance** :arrow_right: **Exclusive Offer at 60€!**
+
+:shopping_cart: **Payment Method:** Cryptocurrencies (*ETH, BTC, SOL, and more*) accepted!
+
+:white_check_mark: **Secure and Reliable Service:**
+```
+- Purchase directly from a trusted seller.
+- Guaranteed instant delivery of account balances.
+- Verified vouches and reviews available upon request.
+- Proofs and screen sharing for your peace of mind.
+```
+:warning: **Note: The seller NEVER goes first in the transaction.**
+
+:inbox_tray: **How to Purchase:**
+```yaml
+1️⃣ Contact us via DM for payment details.
+2️⃣ Receive a secure payment address for your chosen cryptocurrency.
+3️⃣ Make the payment and provide confirmation.
+4️⃣ Enjoy instant access to your premium account balances!
+```
+:question: **Have questions? We're here to help!**
+```yaml
+- Reach out to us for any inquiries or concerns.
+- FAQ available for quick reference.
+```
+:fire: Don't miss out on this exclusive opportunity! Get premium account balances at unbeatable prices today! :fire:''', files=imagenes_adjuntas)
 
 @bot.command()
 async def start(ctx):
