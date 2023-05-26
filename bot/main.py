@@ -16,8 +16,7 @@ canales_ids_anuncio = [1088487226628919326, 1088487283717586994,
 intervalo_anuncio = 3600  # 1 hora = 3600 segundos
 
 # Configura las rutas de las imágenes que deseas adjuntar en los anuncios
-rutas_imagenes = ['150.jpg', '350.jpg', '500.jpg', '750.jpg'
-                  '900.jpg']  # Rutas de las imágenes
+rutas_imagenes = ['150.jpg', '350.jpg', '750.jpg']  # Rutas de las imágenes
 
 bot = commands.Bot(command_prefix='$')
 
@@ -30,6 +29,7 @@ async def on_ready():
 
 @bot.command()
 async def ayuda(ctx):
+    print('[?] Mensaje de ayuda enviado')
     embed = discord.Embed(
         title="Bot de Ayuda", description="¡Hola! Soy el bot de ayuda.", color=discord.Color.blue())
     embed.add_field(name="Instrucciones:",
@@ -50,7 +50,6 @@ async def enviar_anuncio():
         for ruta_imagen in rutas_imagenes:
             with open(ruta_imagen, 'rb') as imagen:
                 imagenes_adjuntas.append(discord.File(imagen))
-
         await canal_anuncio.send('''
 **:lock: Premium Account Access! Get Instant Balances! :lock:**
 
