@@ -8,15 +8,17 @@ TOKEN = 'MTA4NzA3MDk5NDU2MjI5ODAwNg.GAV8SV.ydnomqsVQa-pICYTaJEHsQq15dlth3zKF28dz
 
 # Configura la lista de IDs de canales de anuncios
 # IDs de los canales para los anuncios
-canales_ids_anuncio = [1088487226628919326, 1088487283717586994,
-                       1090227243017572373, 1090227291981889606, 1090227324756168756,
-                       1107023909599051796, 1107023998426038423, 1107023980071763968, 1107024015652036680]
+canales_ids_anuncio = [     1088487226628919326, 1088487283717586994, 1090227243017572373,
+                            1090227291981889606, 1090227324756168756, 1107023909599051796,
+                            1107023998426038423, 1107023980071763968, 1107024015652036680,
+                            1104787826643578930, 1022450842755944540, 1022450842755944542,
+                            1058820854139584642]
 
 # Configura el intervalo de tiempo entre cada anuncio (en segundos)
 intervalo_anuncio = 3600  # 1 hora = 3600 segundos
 
 # Configura las rutas de las imágenes que deseas adjuntar en los anuncios
-rutas_imagenes = ['150.jpg', '350.jpg', '750.jpg']  # Rutas de las imágenes
+rutas_imagenes = ['fotos/150.jpg', 'fotos/350.jpg', 'fotos/750.jpg']  # Rutas de las imágenes
 
 bot = commands.Bot(command_prefix='$')
 
