@@ -62,6 +62,7 @@ async def enviar_anuncio():
 - **750€ Balance** :arrow_right: **Limited Time Deal at 40€!**
 - **900€ Balance** :arrow_right: **Amazing Deal at 50€!**
 - **1200€ Balance** :arrow_right: **Exclusive Offer at 60€!**
+**LOT MORE BALANCES IN DM**
 
 :shopping_cart: **Payment Method:** Cryptocurrencies (*ETH, BTC, SOL, and more*) accepted!
 

@@ -1,0 +1,5 @@
+{
+  "intervalo_anuncio": 3600,
+  "enviar_fotos": true,
+  "rutas_imagenes": ["fotos/150.jpg", "fotos/750.jpg", "fotos/900.jpg"]
+}

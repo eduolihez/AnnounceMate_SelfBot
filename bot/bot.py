@@ -3,42 +3,70 @@ from discord.ext import commands, tasks
 import asyncio
 import random
 import json
+import datetime
+import colorama
+from colorama import Fore, Style
 
-# Configura tu token de bot de Discord
 TOKEN = 'MTA4NzA3MDk5NDU2MjI5ODAwNg.GAV8SV.ydnomqsVQa-pICYTaJEHsQq15dlth3zKF28dzs'
 
-# Ruta del archivo de configuración de mensajes de anuncio
-ARCHIVO_MENSAJES_ANUNCIO = 'mensajes_anuncio.json'
+# Cargar configuración desde archivo
+with open('configuracion.json', 'rb') as file:
+    configuracion = json.load(file)
 
-# Ruta del archivo de configuración de IDs de canales
-ARCHIVO_IDS_CANALES = 'ids_canales.json'
+# Cargar mensajes de anuncio desde archivo
+with open('mensajes_anuncio.json', 'rb') as file:
+    mensajes_anuncio = json.load(file)
 
-# Configura el intervalo de tiempo entre cada anuncio (en segundos)
-intervalo_anuncio = 3600  # 1 hora = 3600 segundos
+# Cargar IDs de canales de anuncio desde archivo
+with open('canales_ids_anuncio.json', 'rb') as file:
+    canales_ids_anuncio = json.load(file)
 
 bot = commands.Bot(command_prefix='$')
 
-# Cargar mensajes de anuncio desde archivo JSON
+intervalo_anuncio = configuracion['intervalo_anuncio']
 
-
-def cargar_mensajes_anuncio():
-    with open(ARCHIVO_MENSAJES_ANUNCIO, 'rb') as archivo:
-        mensajes_anuncio = json.load(archivo)
-    return mensajes_anuncio
-
-# Cargar IDs de canales desde archivo JSON
-
-
-def cargar_ids_canales():
-    with open(ARCHIVO_IDS_CANALES, 'rb') as archivo:
-        ids_canales = json.load(archivo)
-    return ids_canales
+# Inicializar colorama para los colores de la consola
+colorama.init()
 
 
 @bot.event
 async def on_ready():
     print('El bot está listo')
+    enviar_anuncio.current_oleada = 0
     enviar_anuncio.start()
+
+
+@tasks.loop(seconds=intervalo_anuncio)
+async def enviar_anuncio():
+    enviar_anuncio.current_oleada += 1
+    for canal_id in canales_ids_anuncio:
+        canal_anuncio = bot.get_channel(canal_id)
+        mensaje_anuncio = random.choice(mensajes_anuncio)
+        mensaje = mensaje_anuncio['mensaje']
+        enviar_fotos = mensaje_anuncio['enviar_fotos']
+
+        if enviar_fotos:
+            imagenes_adjuntas = []
+            for ruta_imagen in configuracion['rutas_imagenes']:
+                with open(ruta_imagen, 'rb') as imagen:
+                    imagenes_adjuntas.append(discord.File(imagen))
+            await canal_anuncio.send(content=mensaje, files=imagenes_adjuntas)
+        else:
+            await canal_anuncio.send(content=mensaje)
+
+        registrar_envio(canal_id, enviar_anuncio.current_oleada)
+
+
+def registrar_envio(canal_id, oleada):
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    mensaje_log = f"[{timestamp}] Mensaje enviado al canal {canal_id} en la oleada {oleada}"
+
+    # Colores y decoración para el registro de log
+    color = Fore.GREEN
+    estilo = Style.BRIGHT
+
+    # Imprimir registro de log con colores y decoración
+    print(f"{color}{estilo}{mensaje_log}{Style.RESET_ALL}")
 
 
 @bot.command()
@@ -56,44 +84,9 @@ async def ayuda(ctx):
     await ctx.author.send(embed=embed)
 
 
-@tasks.loop(seconds=intervalo_anuncio)
-async def enviar_anuncio():
-    ids_canales = cargar_ids_canales()
-    mensajes_anuncio = cargar_mensajes_anuncio()
-
-    for canal_id in ids_canales:
-        canal_anuncio = bot.get_channel(canal_id)
-
-        # Selecciona un mensaje aleatorio
-        mensaje_anuncio = random.choice(mensajes_anuncio)
-
-        mensaje = mensaje_anuncio['mensaje']
-        adjuntar_fotos = mensaje_anuncio.get('adjuntar_fotos', False)
-
-        if adjuntar_fotos:
-            await enviar_anuncio_con_fotos(canal_anuncio, mensaje)
-        else:
-            await enviar_anuncio_sin_fotos(canal_anuncio, mensaje)
-
-
-async def enviar_anuncio_con_fotos(canal_anuncio, mensaje):
-    # Configura las rutas de las imágenes que deseas adjuntar en los anuncios
-    rutas_imagenes = ['fotos/150.jpg', 'fotos/350.jpg',
-                      'fotos/750.jpg']  # Rutas de las imágenes
-
-    await canal_anuncio.send(mensaje)
-
-    for ruta_imagen in rutas_imagenes:
-        with open(ruta_imagen, 'rb') as imagen:
-            await canal_anuncio.send(file=discord.File(imagen))
-
-
-async def enviar_anuncio_sin_fotos(canal_anuncio, mensaje):
-    await canal_anuncio.send(mensaje)
-
-
 @bot.command()
 async def start(ctx):
+    enviar_anuncio.current_oleada = 0
     enviar_anuncio.start()
     await ctx.send('El envío de anuncios y mensajes directos ha comenzado')
 
