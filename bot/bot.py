@@ -5,6 +5,7 @@ import random
 import json
 import datetime
 import colorama
+from tabulate import tabulate
 from colorama import Fore, Style
 
 # Configura tu token de bot de Discord
@@ -26,13 +27,44 @@ with open('canales_ids_anuncio.json', 'r', encoding='utf-8') as canales_file:
 intervalo_anuncio_min = config['intervalo_anuncio_min']
 intervalo_anuncio_max = config['intervalo_anuncio_max']
 
+# Inicializa colorama
+colorama.init()
+
 bot = commands.Bot(command_prefix='$')
 
 
+def mostrar_registros(registros):
+    headers = [f"{Fore.CYAN}Canal{Style.RESET_ALL}",
+               f"{Fore.CYAN}Estado{Style.RESET_ALL}"]
+    registros_table = []
+
+    for canal_id, estado in registros.items():
+        canal = bot.get_channel(canal_id)
+        registros_table.append([canal.name, estado])
+
+    print(tabulate(registros_table, headers=headers))
+
+
+# Evento de inicio del bot
 @bot.event
 async def on_ready():
-    print(f'{Fore.GREEN}El bot está listo{Style.RESET_ALL}')
-    await check_permissions()
+    print('Esperando a que el bot esté listo...')
+    print('El bot está listo')
+
+    registros_canales = {}
+
+    # Comprueba si se pueden enviar mensajes en todos los canales
+    for canal_id in canales_ids_anuncio:
+        canal = bot.get_channel(canal_id)
+
+        if not canal.permissions_for(canal.guild.me).send_messages:
+            registros_canales[canal_id] = f"{Fore.RED}No se pueden enviar mensajes"
+        else:
+            registros_canales[canal_id] = f"{Fore.GREEN}Se puede enviar mensajes"
+
+    mostrar_registros(registros_canales)
+
+    await enviar_anuncio()
 
 
 async def check_permissions():
@@ -51,17 +83,12 @@ async def check_permissions():
     with open('canales_ids_anuncio.json', 'w', encoding='utf-8') as canales_file:
         json.dump(canales_ids_anuncio, canales_file, indent=4)
 
-    if len(canales_ids_anuncio) == 0:
-        print(f'{Fore.RED}No hay canales disponibles para enviar anuncios. Por favor, añade canales válidos.{Style.RESET_ALL}')
-
 
 @tasks.loop(seconds=random.randint(intervalo_anuncio_min, intervalo_anuncio_max))
 async def enviar_anuncio():
     if len(canales_ids_anuncio) == 0:
         print(f'{Fore.YELLOW}No hay canales disponibles para enviar anuncios en este momento.{Style.RESET_ALL}')
         return
-
-    oleada = random.randint(1, 1000)
 
     for canal_id in canales_ids_anuncio:
         canal_anuncio = bot.get_channel(canal_id)
@@ -80,7 +107,7 @@ async def enviar_anuncio():
 
                 await canal_anuncio.send(content=mensaje, files=imagenes_adjuntas)
                 print(
-                    f'{Fore.CYAN}Mensaje enviado en el canal: {canal_anuncio.name} - Oleada: {oleada}{Style.RESET_ALL}')
+                    f'{Fore.CYAN}Mensaje enviado en el canal: {canal_anuncio.name}{Style.RESET_ALL}')
             else:
                 print(
                     f'{Fore.YELLOW}No se puede enviar mensajes en el canal: {canal_anuncio.name} - Saltando...{Style.RESET_ALL}')
@@ -99,55 +126,4 @@ async def before_enviar_anuncio():
     print(f'{Fore.GREEN}Esperando a que el bot esté listo...{Style.RESET_ALL}')
     await bot.wait_until_ready()
 
-# Guarda la invitación permanente de cada servidor y su nombre en un archivo .txt
-
-
-async def guardar_invitaciones():
-    with open('invitaciones_servidores.txt', 'w', encoding='utf-8') as invitaciones_file:
-        for guild in bot.guilds:
-            invite = await guild.invites()
-            if invite:
-                invitacion = invite[0]
-                invitaciones_file.write(
-                    f'Servidor: {guild.name} - Invitación: {invitacion.url}\n')
-                print(
-                    f'{Fore.GREEN}Guardada la invitación del servidor: {guild.name}{Style.RESET_ALL}')
-            else:
-                print(
-                    f'{Fore.YELLOW}No se pudo obtener la invitación del servidor: {guild.name}{Style.RESET_ALL}')
-
-# Evento que se ejecuta cuando el bot se conecta a un servidor
-
-
-@bot.event
-async def on_guild_join(guild):
-    await guardar_invitaciones()
-
-# Evento que se ejecuta cuando el bot es expulsado de un servidor
-
-
-@bot.event
-async def on_guild_remove(guild):
-    await guardar_invitaciones()
-    for canal_id in canales_ids_anuncio:
-        if bot.get_channel(canal_id).guild == guild:
-            canales_ids_anuncio.remove(canal_id)
-            print(f'{Fore.RED}Eliminada la ID del canal: {canal_id} del archivo canales_ids_anuncio.json debido a la expulsión del servidor{Style.RESET_ALL}')
-
-# Evento que se ejecuta cuando el bot es baneado de un servidor
-
-
-@bot.event
-async def on_guild_ban(guild, user):
-    await guardar_invitaciones()
-    for canal_id in canales_ids_anuncio:
-        if bot.get_channel(canal_id).guild == guild:
-            canales_ids_anuncio.remove(canal_id)
-            print(f'{Fore.RED}Eliminada la ID del canal: {canal_id} del archivo canales_ids_anuncio.json debido al banneo del servidor{Style.RESET_ALL}')
-
-# Ejecuta el loop para enviar los anuncios
-enviar_anuncio.start()
-# Ejecuta la tarea para guardar las invitaciones de los servidores
-bot.loop.create_task(guardar_invitaciones())
-# Inicia el bot
 bot.run(TOKEN, bot=False)
