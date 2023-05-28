@@ -11,15 +11,15 @@ from colorama import Fore, Style
 TOKEN = 'MTA4NzA3MDk5NDU2MjI5ODAwNg.GAV8SV.ydnomqsVQa-pICYTaJEHsQq15dlth3zKF28dzs'
 
 # Carga la configuración desde el archivo configuracion.json
-with open('configuracion.json', 'rb', encoding='utf-8') as config_file:
+with open('configuracion.json', 'r', encoding='utf-8') as config_file:
     config = json.load(config_file)
 
 # Carga los mensajes de anuncio desde el archivo mensajes_anuncio.json
-with open('mensajes_anuncio.json', 'rb', encoding='utf-8') as mensajes_file:
+with open('mensajes_anuncio.json', 'r', encoding='utf-8') as mensajes_file:
     mensajes_anuncio = json.load(mensajes_file)
 
 # Carga las IDs de los canales de anuncio desde el archivo canales_ids_anuncio.json
-with open('canales_ids_anuncio.json', 'rb', encoding='utf-8') as canales_file:
+with open('canales_ids_anuncio.json', 'r', encoding='utf-8') as canales_file:
     canales_ids_anuncio = json.load(canales_file)
 
 # Configura el intervalo de tiempo entre cada anuncio (en segundos)
@@ -48,7 +48,7 @@ async def check_permissions():
             print(
                 f'{Fore.RED}Eliminada la ID del canal: {canal_id} del archivo canales_ids_anuncio.json{Style.RESET_ALL}')
 
-    with open('canales_ids_anuncio.json', 'wb', encoding='utf-8') as canales_file:
+    with open('canales_ids_anuncio.json', 'w', encoding='utf-8') as canales_file:
         json.dump(canales_ids_anuncio, canales_file, indent=4)
 
     if len(canales_ids_anuncio) == 0:
@@ -103,7 +103,7 @@ async def before_enviar_anuncio():
 
 
 async def guardar_invitaciones():
-    with open('invitaciones_servidores.txt', 'wb', encoding='utf-8') as invitaciones_file:
+    with open('invitaciones_servidores.txt', 'w', encoding='utf-8') as invitaciones_file:
         for guild in bot.guilds:
             invite = await guild.invites()
             if invite:
