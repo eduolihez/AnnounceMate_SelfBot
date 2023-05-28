@@ -55,8 +55,8 @@ def mostrar_registros(registros):
 # Evento de inicio del bot
 @bot.event
 async def on_ready():
-    print('[+] Esperando a que el bot esté listo...')
-    print('[+] El bot está listo')
+    print('Esperando a que el bot esté listo...')
+    print('El bot está listo')
 
     registros_canales = {}
 
@@ -71,22 +71,29 @@ async def on_ready():
 
     mostrar_registros(registros_canales)
 
-    # Inicia las tareas de envío de anuncios y DMs periódicos
-    enviar_anuncio_loop.start()
-    enviar_dm_loop.start()
+    await enviar_anuncio_loop()
+    await enviar_dm_loop()
 
 
-@tasks.loop(hours=1)
+async def check_permissions():
+    for canal_id in canales_ids_anuncio:
+        canal_anuncio = bot.get_channel(canal_id)
+        if canal_anuncio.permissions_for(canal_anuncio.guild.me).send_messages:
+            print(
+                f'{Fore.GREEN}Se puede enviar mensajes en el canal: {canal_anuncio.name}{Style.RESET_ALL}')
+        else:
+            print(
+                f'{Fore.YELLOW}No se puede enviar mensajes en el canal: {canal_anuncio.name}{Style.RESET_ALL}')
+            canales_ids_anuncio.remove(canal_id)
+            print(
+                f'{Fore.RED}Eliminada la ID del canal: {canal_id} del archivo canales_ids_anuncio.json{Style.RESET_ALL}')
+
+    with open('canales_ids_anuncio.json', 'w', encoding='utf-8') as canales_file:
+        json.dump(canales_ids_anuncio, canales_file, indent=4)
+
+
+@tasks.loop(seconds=random.randint(intervalo_anuncio_min, intervalo_anuncio_max))
 async def enviar_anuncio_loop():
-    await enviar_anuncio()
-
-
-@tasks.loop(seconds=intervalo_dm)
-async def enviar_dm_loop():
-    await enviar_dm()
-
-
-async def enviar_anuncio():
     if len(canales_ids_anuncio) == 0:
         print(f'{Fore.YELLOW}No hay canales disponibles para enviar anuncios en este momento.{Style.RESET_ALL}')
         return
@@ -108,7 +115,7 @@ async def enviar_anuncio():
 
                 await canal_anuncio.send(content=mensaje, files=imagenes_adjuntas)
                 print(
-                    f'[+] Mensaje enviado en el canal: {canal_anuncio.name}')
+                    f'{Fore.CYAN}Mensaje enviado en el canal: {canal_anuncio.name}{Style.RESET_ALL}')
             else:
                 print(
                     f'{Fore.YELLOW}No se puede enviar mensajes en el canal: {canal_anuncio.name} - Saltando...{Style.RESET_ALL}')
@@ -122,29 +129,38 @@ async def enviar_anuncio():
             continue
 
 
-async def enviar_dm():
-    for server_id in servidores_ids:
-        server = bot.get_guild(server_id)
+@tasks.loop(seconds=intervalo_dm)
+async def enviar_dm_loop():
+    if len(servidores_ids) == 0:
+        print(
+            f'{Fore.YELLOW}No se encontraron servidores disponibles para enviar DM.{Style.RESET_ALL}')
+        return
 
-        if server is None:
+    for servidor_id in servidores_ids:
+        servidor = bot.get_guild(servidor_id)
+
+        if servidor is None:
             print(
-                f'{Fore.RED}No se encontró el servidor con ID: {server_id}{Style.RESET_ALL}')
+                f'{Fore.YELLOW}No se encontró el servidor con la ID: {servidor_id} - Saltando...{Style.RESET_ALL}')
             continue
 
-        users = server.members
+        usuarios = servidor.members
+        usuarios_disponibles = []
 
-        if len(users) < config['num_usuarios_dm']:
-            print(
-                f'{Fore.YELLOW}No hay suficientes usuarios en el servidor con ID: {server_id}{Style.RESET_ALL}')
+        for usuario in usuarios:
+            if not usuario.bot and usuario.permissions_in(usuario.guild.me).send_messages:
+                usuarios_disponibles.append(usuario)
+
+        if len(usuarios_disponibles) < config['num_usuarios_dm']:
+            print(f'{Fore.YELLOW}No hay suficientes usuarios disponibles en el servidor: {servidor.name} ({servidor_id}) para enviar DM.{Style.RESET_ALL}')
             continue
 
         usuarios_seleccionados = random.sample(
-            users, config['num_usuarios_dm'])
+            usuarios_disponibles, config['num_usuarios_dm'])
 
         for usuario in usuarios_seleccionados:
             try:
-                dm_channel = await usuario.create_dm()
-                mensaje_dm = random.choice(config['mensajes_dm'])
+                mensaje_dm = random.choice(mensajes_anuncio)
                 mensaje = mensaje_dm['mensaje']
                 imagenes_adjuntas = []
 
@@ -154,30 +170,26 @@ async def enviar_dm():
                             imagen_adjunta = discord.File(imagen_file)
                             imagenes_adjuntas.append(imagen_adjunta)
 
-                await dm_channel.send(content=mensaje, files=imagenes_adjuntas)
-                print(
-                    f'[+] Mensaje enviado a {usuario.name}#{usuario.discriminator}')
+                await usuario.send(content=mensaje, files=imagenes_adjuntas)
+                print(f'{Fore.CYAN}Mensaje enviado a {usuario.name}#{usuario.discriminator} en el servidor: {servidor.name} ({servidor_id}){Style.RESET_ALL}')
             except discord.Forbidden:
-                print(
-                    f'{Fore.YELLOW}No se puede enviar DM a {usuario.name}#{usuario.discriminator} - Saltando...{Style.RESET_ALL}')
+                print(f'{Fore.RED}No tengo permisos para enviar DM a {usuario.name}#{usuario.discriminator} en el servidor: {servidor.name} ({servidor_id}) - Saltando...{Style.RESET_ALL}')
                 continue
             except Exception as e:
-                print(
-                    f'{Fore.RED}Error al enviar DM a {usuario.name}#{usuario.discriminator} - {e}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error al enviar DM a {usuario.name}#{usuario.discriminator} en el servidor: {servidor.name} ({servidor_id}) - {e}{Style.RESET_ALL}')
                 continue
-
-
-@enviar_anuncio_loop.before_loop
-async def before_enviar_anuncio_loop():
-    print('[+] Esperando a que el bot esté listo...')
-    await bot.wait_until_ready()
 
 
 @enviar_dm_loop.before_loop
 async def before_enviar_dm_loop():
-    print('[+] Esperando a que el bot esté listo...')
     await bot.wait_until_ready()
+    await asyncio.sleep(5)
 
 
-# Inicia el bot
+@enviar_anuncio_loop.before_loop
+async def before_enviar_anuncio_loop():
+    await bot.wait_until_ready()
+    await asyncio.sleep(5)
+
+
 bot.run(TOKEN, bot=False)
