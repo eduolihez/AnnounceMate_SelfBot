@@ -1,70 +1,61 @@
-# Nombre del Proyecto
+# 🌟 DiscordAdvertiseBot 🌟
 
 ## Descripción
 
-Este proyecto es un bot de Discord que se utiliza para enviar anuncios periódicos a varios canales y mensajes directos a usuarios seleccionados de diferentes servidores.
+DiscordAdvertiseBot es un bot especializado en anuncios que te permite enviar mensajes promocionales a múltiples canales en Discord de manera automática y eficiente. Con DiscordAdvertiseBot, podrás personalizar tus anuncios, incluir imágenes atractivas y establecer intervalos de tiempo para su envío.
 
-El bot está diseñado para cumplir con las necesidades de enviar anuncios con imágenes adjuntas y mensajes directos a usuarios de forma automatizada.
+## Requisitos
 
-## Características
-
-- Envío periódico de anuncios a múltiples canales de Discord.
-- Adjuntar imágenes a los anuncios.
-- Envío de mensajes directos a usuarios seleccionados de diferentes servidores.
-- Reintento automático si los mensajes directos están cerrados.
-
-## Requisitos Previos
-
-- Python 3.7 o superior
-- discord.py
+- Python 3.5 o superior
+- Biblioteca Discord.py
+- Biblioteca Colorama
 
 ## Configuración
 
-1. Clona el repositorio o descarga los archivos del proyecto.
+1. Clona este repositorio en tu máquina local o descarga los archivos del programa.
 
-2. Obtén un token de bot de Discord siguiendo la [documentación oficial](https://discordpy.readthedocs.io/en/stable/discord.html).
+2. Abre el archivo `configuracion.json` y configura los siguientes parámetros:
 
-3. Abre el archivo `bot.py` y reemplaza `'tu_token_de_discord'` con tu propio token de bot de Discord.
+   - `token`: Inserta aquí el token de tu bot de Discord. Puedes obtenerlo creando una aplicación de bot en el [Portal de Desarrolladores de Discord](https://discord.com/developers/applications).
 
-4. Configura las opciones del bot según tus necesidades:
+   - `correo`: Inserta aquí tu dirección de correo electrónico asociada a tu cuenta de Discord.
 
-   - `servidores_ids`: Lista de IDs de los servidores donde se seleccionarán los usuarios aleatorios.
-   - `canales_ids_anuncio`: Lista de IDs de los canales de anuncios.
-   - `intervalo_anuncio`: Intervalo de tiempo entre cada anuncio (en segundos).
-   - `rutas_imagenes`: Rutas de las imágenes que se adjuntarán en los anuncios.
-   - `intervalo_dm`: Intervalo de tiempo entre cada mensaje directo (en segundos).
+   - `adjuntar_fotos`: Establece esta opción a `true` si deseas adjuntar imágenes a tus anuncios. Si no deseas adjuntar imágenes, establece esta opción a `false`.
 
-5. Ejecuta el bot utilizando el siguiente comando:
-   ```bash
-   python main.py
-   ```
+   - `imagenes`: Si has habilitado la opción de adjuntar imágenes, ingresa la ruta completa de las imágenes que deseas enviar. Puedes especificar varias imágenes separadas por comas.
+
+3. Abre el archivo `mensajes_anuncio.json` y personaliza tus mensajes de anuncio. Puedes agregar tantos mensajes como desees, siguiendo la estructura de ejemplo proporcionada.
+
+4. Abre el archivo `canales_ids_anuncio.json` y configura los IDs de los canales en los que deseas enviar los anuncios. Puedes agregar tantos IDs como desees, siguiendo la estructura de ejemplo proporcionada.
 
 ## Uso
 
-1. Invita al bot a tus servidores de Discord utilizando el enlace de invitación generado a través del [portal de desarrolladores de Discord](https://discord.com/developers/applications).
+1. Asegúrate de que el bot tenga los permisos necesarios para enviar mensajes en los canales especificados en `canales_ids_anuncio.json`.
 
-2. Configura los permisos necesarios para el bot en los servidores y canales donde deseas que funcione.
+2. Ejecuta el programa ejecutando el siguiente comando en tu terminal:
 
-3. Ejecuta el comando `!start` en Discord para iniciar el envío de anuncios y mensajes directos.
+```python
+python bot.py
+```
 
-4. Opcionalmente, puedes ejecutar el comando `!stop` para detener el envío de anuncios y mensajes directos.
+El bot se conectará a Discord y estará listo para enviar anuncios.
 
-## Contribución
+3. El bot enviará los anuncios automáticamente según el intervalo de tiempo establecido en `configuracion.json`. Puedes modificar este intervalo según tus preferencias.
 
-Las contribuciones son bienvenidas. Si deseas contribuir a este proyecto, sigue estos pasos:
+## Registro de Actividad
 
-1. Haz un fork del repositorio.
+El bot genera un registro de actividad en el archivo `registro.txt`. Este archivo contiene información sobre los mensajes enviados, los canales a los que se enviaron y el número de oleada. Puedes consultar este archivo para rastrear el progreso y las estadísticas de tus anuncios.
 
-2. Crea una rama con una descripción clara de la característica o corrección que deseas implementar.
+## Notas
 
-3. Realiza los cambios necesarios en tu rama.
+- Asegúrate de mantener tus credenciales y tokens de Discord en un lugar seguro y no compartirlos con nadie.
 
-4. Realiza un pull request explicando tus cambios y las razones detrás de ellos.
+- Si experimentas algún problema o error al ejecutar el bot, asegúrate de tener instaladas las bibliotecas `discord.py` y `colorama`. Puedes instalarlas usando el siguiente comando:
 
-## Agradecimientos
+```bash
+pip install colorama
+```
 
-Agradecemos a todos los contribuyentes que han hecho posible este proyecto.
+- Recuerda respetar las políticas y términos de uso de Discord al enviar anuncios y asegurarte de tener los permisos adecuados para enviar mensajes en los canales seleccionados.
 
-## Licencia
-
-Este proyecto está bajo la Licencia [MIT](LICENSE).
+¡Disfruta de tus anuncios automáticos con DiscordAdvertiseBot! Si tienes alguna pregunta o necesitas ayuda, no dudes en contactar al desarrollador en s4var@proton.me.
