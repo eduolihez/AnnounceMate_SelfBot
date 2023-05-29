@@ -1,0 +1,14 @@
+[
+  {
+    "message": "Hello everyone! Don't forget to join our event tomorrow.",
+    "attach_images": true
+  },
+  {
+    "message": "Greetings! We have exciting news to share with you.",
+    "attach_images": false
+  },
+  {
+    "message": "Attention all members! We have an important announcement.",
+    "attach_images": true
+  }
+]
