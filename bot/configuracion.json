@@ -2,7 +2,5 @@
   "token": "MTA4NzA3MDk5NDU2MjI5ODAwNg.GAV8SV.ydnomqsVQa-pICYTaJEHsQq15dlth3zKF28dzs",
   "intervalo_anuncio_min": 900,
   "intervalo_anuncio_max": 3600,
-  "intervalo_dm": 5400,
-  "num_usuarios_dm": 3,
   "rutas_imagenes": ["fotos/350.jpg", "fotos/500.jpg", "fotos/900.jpg"]
 }
