@@ -27,7 +27,7 @@ rutas_imagenes = ['150.jpg', '350.jpg',
 # Configura el intervalo de tiempo entre cada mensaje directo (en segundos)
 intervalo_dm = 5400  # 1.5 horas = 5400 segundos
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='!' )
 
 
 @bot.event
