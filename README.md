@@ -1,61 +1,61 @@
-# 🌟 DiscordAdvertiseBot 🌟
+# 🌟 AnnounceMate SelfBot🌟
 
-## Descripción
+## Description
 
-DiscordAdvertiseBot es un bot especializado en anuncios que te permite enviar mensajes promocionales a múltiples canales en Discord de manera automática y eficiente. Con DiscordAdvertiseBot, podrás personalizar tus anuncios, incluir imágenes atractivas y establecer intervalos de tiempo para su envío.
+AnnounceMate SelfBot is a specialized bot for announcements that allows you to send promotional messages to multiple Discord channels automatically and efficiently. With AnnounceMate, you can customize your announcements, include attractive images, and set time intervals for their delivery.
 
-## Requisitos
+## Requirements
 
-- Python 3.5 o superior
-- Biblioteca Discord.py
-- Biblioteca Colorama
+- Python 3.5 or higher
+- Discord.py library
+- Colorama library
 
-## Configuración
+## Configuration
 
-1. Clona este repositorio en tu máquina local o descarga los archivos del programa.
+1. Clone this repository to your local machine or download the program files.
 
-2. Abre el archivo `configuracion.json` y configura los siguientes parámetros:
+2. Open the `configuration.json` file and configure the following parameters:
 
-   - `token`: Inserta aquí el token de tu bot de Discord. Puedes obtenerlo creando una aplicación de bot en el [Portal de Desarrolladores de Discord](https://discord.com/developers/applications).
+   - `token`: Insert your Discord bot token here. You can obtain it by creating a bot application on the [Discord Developer Portal](https://discord.com/developers/applications).
 
-   - `correo`: Inserta aquí tu dirección de correo electrónico asociada a tu cuenta de Discord.
+   - `email`: Insert your email address associated with your Discord account here.
 
-   - `adjuntar_fotos`: Establece esta opción a `true` si deseas adjuntar imágenes a tus anuncios. Si no deseas adjuntar imágenes, establece esta opción a `false`.
+   - `attach_photos`: Set this option to `true` if you want to attach images to your announcements. If you don't want to attach images, set this option to `false`.
 
-   - `imagenes`: Si has habilitado la opción de adjuntar imágenes, ingresa la ruta completa de las imágenes que deseas enviar. Puedes especificar varias imágenes separadas por comas.
+   - `images`: If you have enabled the option to attach images, enter the full path of the images you want to send. You can specify multiple images separated by commas.
 
-3. Abre el archivo `mensajes_anuncio.json` y personaliza tus mensajes de anuncio. Puedes agregar tantos mensajes como desees, siguiendo la estructura de ejemplo proporcionada.
+3. Open the `announcement_messages.json` file and customize your announcement messages. You can add as many messages as you want, following the provided example structure.
 
-4. Abre el archivo `canales_ids_anuncio.json` y configura los IDs de los canales en los que deseas enviar los anuncios. Puedes agregar tantos IDs como desees, siguiendo la estructura de ejemplo proporcionada.
+4. Open the `announcement_channel_ids.json` file and configure the IDs of the channels where you want to send the announcements. You can add as many IDs as you want, following the provided example structure.
 
-## Uso
+## Usage
 
-1. Asegúrate de que el bot tenga los permisos necesarios para enviar mensajes en los canales especificados en `canales_ids_anuncio.json`.
+1. Ensure that the bot has the necessary permissions to send messages in the channels specified in `announcement_channel_ids.json`.
 
-2. Ejecuta el programa ejecutando el siguiente comando en tu terminal:
+2. Run the program by executing the following command in your terminal:
 
 ```python
 python bot.py
 ```
 
-El bot se conectará a Discord y estará listo para enviar anuncios.
+The bot will connect to Discord and be ready to send announcements.
 
-3. El bot enviará los anuncios automáticamente según el intervalo de tiempo establecido en `configuracion.json`. Puedes modificar este intervalo según tus preferencias.
+3. The bot will automatically send announcements according to the time interval set in `configuration.json`. You can modify this interval according to your preferences.
 
-## Registro de Actividad
+## Activity Log
 
-El bot genera un registro de actividad en el archivo `registro.txt`. Este archivo contiene información sobre los mensajes enviados, los canales a los que se enviaron y el número de oleada. Puedes consultar este archivo para rastrear el progreso y las estadísticas de tus anuncios.
+The bot generates an activity log in the `log.txt` file. This file contains information about sent messages, the channels they were sent to, and the wave number. You can refer to this file to track the progress and statistics of your announcements.
 
-## Notas
+## Notes
 
-- Asegúrate de mantener tus credenciales y tokens de Discord en un lugar seguro y no compartirlos con nadie.
+- Ensure that you keep your Discord credentials and tokens secure and do not share them with anyone.
 
-- Si experimentas algún problema o error al ejecutar el bot, asegúrate de tener instaladas las bibliotecas `discord.py` y `colorama`. Puedes instalarlas usando el siguiente comando:
+- If you encounter any issues or errors when running the bot, make sure you have the `discord.py` and `colorama` libraries installed. You can install them using the following command:
 
 ```bash
 pip install colorama
 ```
 
-- Recuerda respetar las políticas y términos de uso de Discord al enviar anuncios y asegurarte de tener los permisos adecuados para enviar mensajes en los canales seleccionados.
+- Remember to adhere to Discord's policies and terms of use when sending announcements, and ensure you have the appropriate permissions to send messages in the selected channels.
 
-¡Disfruta de tus anuncios automáticos con DiscordAdvertiseBot! Si tienes alguna pregunta o necesitas ayuda, no dudes en contactar al desarrollador en s4var@proton.me.
+Enjoy automatic announcements with AnnounceMate! If you have any questions or need assistance, feel free to contact the developer at s4var@proton.me.
