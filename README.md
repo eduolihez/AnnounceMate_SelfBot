@@ -1,61 +1,118 @@
-# 🌟 AnnounceMate SelfBot🌟
+# AnnounceMate SelfBot
 
 ## Description
+**AnnounceMate SelfBot** is a customizable automation bot for personal use in managing announcements and repetitive tasks on platforms like Discord. It is designed to streamline workflows and enhance productivity through easy-to-use commands and scheduling features.
 
-AnnounceMate SelfBot is a specialized bot for announcements that allows you to send promotional messages to multiple Discord channels automatically and efficiently. With AnnounceMate, you can customize your announcements, include attractive images, and set time intervals for their delivery.
+---
 
-## Requirements
+## Table of Contents
+- [AnnounceMate SelfBot](#announcemate-selfbot)
+  - [Description](#description)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Example Commands:](#example-commands)
+  - [Technologies Used](#technologies-used)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Contact](#contact)
 
-- Python 3.5 or higher
-- Discord.py library
-- Colorama library
+---
 
-## Configuration
+## Features
+- **Automated Announcements**: Schedule announcements with ease.
+- **Custom Commands**: Create personalized commands for repetitive tasks.
+- **User-Friendly Configuration**: Simple setup with config files.
+- **Cross-Platform Compatibility**: Works on Windows, macOS, and Linux.
 
-1. Clone this repository to your local machine or download the program files.
+---
 
-2. Open the `configuration.json` file and configure the following parameters:
+## Installation
+Follow these steps to set up the project locally:
 
-   - `token`: Insert your Discord bot token here. You can obtain it by creating a bot application on the [Discord Developer Portal](https://discord.com/developers/applications).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/eduolihez/AnnounceMate_SelfBot.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd AnnounceMate_SelfBot
+   ```
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Configure the bot by editing the `config.json` file with your preferred settings.
+5. Run the bot:
+   ```bash
+   python main.py
+   ```
 
-   - `email`: Insert your email address associated with your Discord account here.
-
-   - `attach_photos`: Set this option to `true` if you want to attach images to your announcements. If you don't want to attach images, set this option to `false`.
-
-   - `images`: If you have enabled the option to attach images, enter the full path of the images you want to send. You can specify multiple images separated by commas.
-
-3. Open the `announcement_messages.json` file and customize your announcement messages. You can add as many messages as you want, following the provided example structure.
-
-4. Open the `announcement_channel_ids.json` file and configure the IDs of the channels where you want to send the announcements. You can add as many IDs as you want, following the provided example structure.
+---
 
 ## Usage
+To use **AnnounceMate SelfBot**:
 
-1. Ensure that the bot has the necessary permissions to send messages in the channels specified in `announcement_channel_ids.json`.
+1. Ensure the bot is properly configured using the `config.json` file.
+2. Start the bot by running `python main.py`.
+3. Use predefined commands to manage announcements or create custom commands as per your requirements.
 
-2. Run the program by executing the following command in your terminal:
+### Example Commands:
+- **Schedule an Announcement**:
+  ```
+  !announce [time] [message]
+  ```
+- **Custom Command**:
+  ```
+  !custom [command_name] [action]
+  ```
 
-```python
-python bot.py
-```
+Here is an example of the bot in action:
 
-The bot will connect to Discord and be ready to send announcements.
+![Bot Screenshot](bot_ss.png)
 
-3. The bot will automatically send announcements according to the time interval set in `configuration.json`. You can modify this interval according to your preferences.
+---
 
-## Activity Log
+## Technologies Used
+This project utilizes the following technologies:
+- **Python**: Core programming language for bot functionality.
+- **Discord.py**: Library for Discord bot integration.
+- **JSON**: For configuration management.
+- **Asyncio**: For scheduling tasks and asynchronous operations.
 
-The bot generates an activity log in the `log.txt` file. This file contains information about sent messages, the channels they were sent to, and the wave number. You can refer to this file to track the progress and statistics of your announcements.
+---
 
-## Notes
+## Contributing
+Contributions are welcome! If you'd like to contribute to this project:
 
-- Ensure that you keep your Discord credentials and tokens secure and do not share them with anyone.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Description of changes"
+   ```
+4. Push the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a Pull Request on GitHub.
 
-- If you encounter any issues or errors when running the bot, make sure you have the `discord.py` and `colorama` libraries installed. You can install them using the following command:
+Please ensure your contributions follow the [Contributor Covenant](https://www.contributor-covenant.org/).
 
-```bash
-pip install colorama
-```
+---
 
-- Remember to adhere to Discord's policies and terms of use when sending announcements, and ensure you have the appropriate permissions to send messages in the selected channels.
+## License
+This project is licensed under the [MIT License](LICENCE). Feel free to use, modify, and distribute it as you see fit. For more details, see the LICENSE file.
 
-Enjoy automatic announcements with AnnounceMate! If you have any questions or need assistance, feel free to contact the developer at s4var@proton.me.
+---
+
+## Contact
+If you have any questions or suggestions, feel free to reach out:
+- **GitHub**: [eduolihez](https://github.com/eduolihez)
+- **Telegram**: [eduolihez](t.me/eduolihez)
+
+Thank you for checking out my project! If you found it helpful, please consider giving it a ⭐ on GitHub.
